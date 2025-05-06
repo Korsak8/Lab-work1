@@ -7,15 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #3f37c9;
-            --dark: #1b263b;
+            --primary: #7b2cbf;
+            --primary-dark: #5a189a;
+            --secondary: #9d4edd;
+            --dark: #212529;
             --light: #f8f9fa;
             --gray: #adb5bd;
             --success: #4cc9f0;
             --warning: #f8961e;
             --danger: #ef233c;
+            --bg-gradient: linear-gradient(135deg, #f8f0ff 0%, #f1d9ff 100%);
         }
         
         * {
@@ -26,7 +27,7 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
+            background: var(--bg-gradient);
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
@@ -35,12 +36,13 @@
         
         .container {
             background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(123, 44, 191, 0.15);
             padding: 2.5rem;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            border: 1px solid rgba(123, 44, 191, 0.1);
         }
         
         .header {
@@ -53,13 +55,25 @@
         }
         
         h1 {
-            color: var(--dark);
             font-size: 2.25rem;
             font-weight: 700;
             margin: 0;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
         
         .controls {
@@ -68,25 +82,25 @@
         }
         
         .button {
-            background-color: var(--primary);
+            background: var(--primary);
             color: white;
             padding: 0.75rem 1.75rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+            box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
         }
         
         .button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.25);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(123, 44, 191, 0.4);
         }
         
         .button:active {
@@ -94,20 +108,42 @@
         }
         
         .button:disabled {
-            background-color: var(--gray);
+            background: var(--gray);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
         
-        .button i {
-            font-size: 1.2em;
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 3px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
         }
         
         .table-container {
             overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            border: 1px solid rgba(123, 44, 191, 0.1);
+        }
+        
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+            background: rgba(157, 78, 221, 0.1);
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
         }
         
         table {
@@ -119,11 +155,11 @@
         th, td {
             padding: 1rem 1.25rem;
             text-align: left;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid rgba(123, 44, 191, 0.1);
         }
         
         th {
-            background-color: #f8f9fa;
+            background-color: rgba(123, 44, 191, 0.05);
             color: var(--dark);
             font-weight: 600;
             text-transform: uppercase;
@@ -133,16 +169,29 @@
             top: 0;
         }
         
-        tbody tr {
-            transition: background-color 0.2s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
+        tbody tr {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        
+        tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        tbody tr:nth-child(2) { animation-delay: 0.2s; }
+        tbody tr:nth-child(3) { animation-delay: 0.3s; }
+        tbody tr:nth-child(4) { animation-delay: 0.4s; }
+        tbody tr:nth-child(5) { animation-delay: 0.5s; }
+        
         tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: rgba(123, 44, 191, 0.03);
         }
         
         tbody tr:nth-child(even) {
-            background-color: #f8fafc;
+            background-color: rgba(123, 44, 191, 0.02);
         }
         
         .badge {
@@ -181,6 +230,11 @@
             h1 {
                 font-size: 1.75rem;
             }
+            
+            h1::after {
+                width: 40px;
+                height: 3px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -188,13 +242,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>RTT Performance Test</h1>
+            <h1>Network Latency Benchmark</h1>
             <div class="controls">
                 <button class="button" onclick="startTests()" id="runButton">
                     <i class="fas fa-play"></i> Run Test
                 </button>
             </div>
         </div>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
         <div class="table-container">
             <table>
                 <thead>
